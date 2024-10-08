@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../styles/cms_thm.css">
+    <link rel="stylesheet" href="../../styles/cms.css">
+    <title>Category Entry</title>
+
+</head>
+
+<body>
+    <!--Form For Inputing Data -->
+    <div class="klub_tab_tl1_x cms_tile_hldr" align="center" style="background-color: #fffaf1;">
+        <form action="" onsubmit="postData(event)" method="post" enctype="multipart/form-data" id="defaultform">
+            <table>
+                <tr>
+                    <td>
+                        <label for="inv_id">Invoice Number: </label>
+                    </td>
+                    <td>
+                        <select required name="inv_id" id="inv_id" class="klub_input klub_h3 cms_inp_det1">
+                            <option>None</option>
+                        </select>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="inv_item_id">Invoice Item Name: </label>
+                    </td>
+                    <td>
+                        <input required type="text" name="inv_item_id" id="inv_item_id" class="klub_input klub_h3 cms_inp_det1">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="make_year">Make Year: </label>
+                    </td>
+                    <td>
+                        <input required type="text" name="make_year" id="make_year" class="klub_input klub_h3 cms_inp_det1"></input >
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="asset_code">Asset Code : </label>
+                    </td>
+                    <td>
+                        <input required type="text" name="asset_code" id="asset_code" class="klub_input klub_h3 cms_inp_det1">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="purpose">Purpose: </label>
+                    </td>
+                    <td>
+                        <input type="text"  name="purpose" id="purpose" class="klub_input klub_h3 cms_inp_det1"></input >
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for=" current_place "> Current Place : </label>
+                    </td>
+                    <td>
+                        <input type="text" name=" current_place " id=" current_place " class="klub_input klub_h3 cms_inp_det1">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="building">Building: </label>
+                    </td>
+                    <td>
+                        <input type="text" name="building" id="building" class="klub_input klub_h3 cms_inp_det1"></input >
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="room_no">Room No</label>
+                    </td>
+                    <td>
+                        <input type="text" name="room_no" id="room_no" class="klub_input klub_h3 cms_inp_det1"></input >
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="purchased_to">Purchased To</label>
+                    </td>
+                    <td>
+                        <input required type="text" name="purchased_to" id="purchased_to" class="klub_input klub_h3 cms_inp_det1"></input >
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="primary_custodian">Primary Custodian</label>
+                    </td>
+                    <td>
+                        <input required type="text" name="primary_custodian" id="primary_custodian" class="klub_input klub_h3 cms_inp_det1"></input >
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="in_charge">In Charge</label>
+                    </td>
+                    <td>
+                        <input type="text"  name="in_charge" id="in_charge" class="klub_input klub_h3 cms_inp_det1"></input >
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="remarks">Remarks</label>
+                    </td>
+                    <td>
+                        <textarea name="remarks" id="remarks" class="klub_input klub_h3 cms_inp_det1"></textarea >
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input class="btn btn-success" role="button" type="submit" name="submit" value="Submit">
+                        </td>
+                        <td><h3 id="resmsg"></h3></td>
+                        </tr>
+
+            </table>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <script type="text/javascript">
+        function postData(event) {
+          event.preventDefault();
+
+          const formData = new FormData(document.getElementById("defaultform"))
+          console.log(formData)
+          formData.append('INVID', document.getElementById("inv_id").selectedOptions[0]
+                .attributes[1].nodeValue)
+  
+          var httpxml = new XMLHttpRequest();
+          $.ajax({
+            method: "POST",
+            url: "itemDetails.php",
+            processData: false,
+            contentType: false,
+            data: formData,
+            success: () => {
+              $("#resmsg").addClass("klub_h3");
+              $("#resmsg")[0].innerText = "Entry Added Successfully";
+              $("#defaultform")[0].reset();
+            },
+            error: () => {
+              $("#resmsg").addClass("klub_tbar_container");
+              $("#resmsg").text = "Error";
+            },
+          });
+        }
+    </script>
+    <script type="text/javascript">
+        window.addEventListener("load", () => {
+        var httpxml = new XMLHttpRequest();
+
+        function stateck() {
+          if (httpxml.readyState == 4) {
+            document.getElementById("inv_id").innerHTML +=
+              httpxml.responseText;
+          }
+        }
+        var url = "getInvoice.php";
+        httpxml.onreadystatechange = stateck;
+        httpxml.open("GET", url, true);
+        httpxml.send(null);
+      });
+
+    </script>
+</body>
+
+</html>

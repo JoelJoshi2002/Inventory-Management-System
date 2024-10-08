@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../styles/cms_thm.css">
+    <link rel="stylesheet" href="../../styles/cms.css">
+    <title>Item Master</title>
+
+</head>
+
+<body>
+    <!--Form For Inputing Data -->
+    <div class="klub_tab_tl1_x cms_tile_hldr" align="center" style="background-color: #fffaf1;">
+        <form action="" onsubmit="postData(event)" method="post" enctype="multipart/form-data" id="defaultform">
+            <table>
+                <tr>
+                    <td>
+                        <label for="slno">SL: </label>
+                    </td>
+                    <td>
+                        <input type="text" name="slno" id="slno" class="klub_input klub_h3 cms_inp_det1">
+                    </td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="invid">Invoice ID: </label>
+                    </td>
+                    <td>
+                        <input type="text" name="invid" id="invid" class="klub_input klub_h3 cms_inp_det1">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="name">Item Name: </label>
+                    </td>
+                    <td>
+                        <input type="text" name="name" id="name" class="klub_input klub_h3 cms_inp_det1">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="modelno">Model Number: </label>
+                    </td>
+                    <td>
+                    <input type="text" name="modelno" id="modelno" class="klub_input klub_h3 cms_inp_det1">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="make">Make : </label>
+                    </td>
+                    <td>
+                        <input type="text" name="make" id="make" class="klub_input klub_h3 cms_inp_det1">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="hsn">HSN/SAC: </label>
+                    </td>
+                    <td>
+                    <input type="text" name="hsn" id="hsn" class="klub_input klub_h3 cms_inp_det1">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="cgst">CGST: </label>
+                    </td>
+                    <td>
+                        <input type="text" name="cgst" id="cgst" class="klub_input klub_h3 cms_inp_det1">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="sgst">SGST: </label>
+                    </td>
+                    <td>
+                        <input type="text" name="sgst" id="sgst" class="klub_input klub_h3 cms_inp_det1">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="igst">IGST: </label>
+                    </td>
+                    <td>
+                        <input type="text" name="igst" id="igst" class="klub_input klub_h3 cms_inp_det1">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="price">Price: </label>
+                    </td>
+                    <td>
+                    <input type="text" name="price" id="price" class="klub_input klub_h3 cms_inp_det1">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="quantity">Quantity: </label>
+                    </td>
+                    <td>
+                    <input type="text" name="quantity" id="quantity" class="klub_input klub_h3 cms_inp_det1">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="amount">Amount: </label>
+                    </td>
+                    <td>
+                    <input type="text" name="amount" id="amount" class="klub_input klub_h3 cms_inp_det1">
+                    </td>
+                </tr>
+                <td>
+                        <label for="warrantyperiod">Warranty Period: </label>
+                    </td>
+                    <td>
+                        <input type="text" name="warrantyperiod" id="warrantyperiod" class="klub_input klub_h3 cms_inp_det1">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="warrantyfrom">Warranty From: </label>
+                    </td>
+                    <td>
+                        <input type="text" name="warrantyfrom" id="warrantyfrom" class="klub_input klub_h3 cms_inp_det1">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="warrantyto">Warranty To: </label>
+                    </td>
+                    <td>
+                    <input type="text" name="warrantyto" id="warrantyto" class="klub_input klub_h3 cms_inp_det1">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="remarks">Remarks: </label>
+                    </td>
+                    <td>
+                    <input type="text" name="remarks" id="remarks" class="klub_input klub_h3 cms_inp_det1">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input class="btn btn-success" role="button" type="submit" name="submit" value="Submit">
+                    </td>
+                    <td>
+                        <h3 id="resmsg"></h3>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <script type="text/javascript">
+      function postData(event) {
+        event.preventDefault();
+
+        var httpxml = new XMLHttpRequest();
+        $.ajax({
+          method: "POST",
+          url: "itemMaster.php",
+          processData: false,
+          contentType: false,
+          data: new FormData(document.getElementById("defaultform")),
+          success: () => {
+            $("#resmsg").addClass("klub_h3");
+
+            $("#resmsg")[0].innerText = "Entry Added Successfully";
+            $("#defaultform")[0].reset();
+          },
+          error: () => {
+            $("#resmsg").addClass("klub_tbar_container");
+
+            $("#resmsg").text = "Error";
+          },
+        });
+      }
+    </script>
+</body>
+
+</html>

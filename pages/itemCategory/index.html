@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../styles/cms_thm.css">
+    <link rel="stylesheet" href="../../styles/cms.css">
+    <title>Category Entry</title>
+
+</head>
+
+<body>
+    <!--Form For Inputing Data -->
+    <div class="klub_tab_tl1_x cms_tile_hldr" align="center" style="background-color: #fffaf1;">
+        <form action="" method="post" enctype="multipart/form-data" onsubmit="postData(event)" id="defaultform">
+            <table>
+                <tr>
+                    <td>
+                        <label for="status">Status: </label>
+                    </td>
+                    <td>
+                        <input type="text" name="status" id="status" class="klub_input klub_h3 cms_inp_det1">
+                    </td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="priority">Item Priority: </label>
+                    </td>
+                    <td>
+                        <input type="text" name="priority" id="priority" class="klub_input klub_h3 cms_inp_det1">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="firstcategory">First Category: </label>
+                    </td>
+                    <td>
+                        <input type="text" name="firstcategory" id="firstcategory" class="klub_input klub_h3 cms_inp_det1">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="firstdescription">First Category Description: </label>
+                    </td>
+                    <td>
+                        <textarea name="firstdescription" id="firstdescription" class="klub_input klub_h3 cms_inp_det1"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="secondcategory">Second Category : </label>
+                    </td>
+                    <td>
+                        <input type="text" name="secondcategory" id="secondcategory" class="klub_input klub_h3 cms_inp_det1">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="seconddescription">Second Category Description: </label>
+                    </td>
+                    <td>
+                        <textarea name="seconddescription" id="seconddescription" class="klub_input klub_h3 cms_inp_det1"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="thirdcategory">Third Category: </label>
+                    </td>
+                    <td>
+                        <input type="text" name="thirdcategory" id="thirdcategory" class="klub_input klub_h3 cms_inp_det1">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="thirddescription">Third Category Description: </label>
+                    </td>
+                    <td>
+                        <textarea name="thirddescription" id="thirddescription" class="klub_input klub_h3 cms_inp_det1"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="remarks">Remarks</label>
+                    </td>
+                    <td>
+                        <textarea name="remarks" id="remarks" class="klub_input klub_h3 cms_inp_det1"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input class="btn btn-success" role="button" type="submit" name="submit" value="Submit">
+                    </td>
+                    <td><h3 id="resmsg"></h3></td>
+
+                    </tr>
+            </table>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <script type="text/javascript">
+      function postData(event) {
+        event.preventDefault();
+
+        var httpxml = new XMLHttpRequest();
+        $.ajax({
+          method: "POST",
+          url: "itemCategory.php",
+          processData: false,
+          contentType: false,
+          data: new FormData(document.getElementById("defaultform")),
+          success: () => {
+            $("#resmsg").addClass("klub_h3");
+            
+            $("#resmsg")[0].innerText = "Entry Added Successfully";
+            $("#defaultform")[0].reset();
+        },
+        error: () => {
+              $("#resmsg").addClass("klub_tbar_container");
+            $("#resmsg").text = "Error";
+          },
+        });
+      }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../styles/cms_thm.css" />
+    <link rel="stylesheet" href="../../styles/cms.css" />
+    <title><Details></Details> Entry</title>
+  </head>
+
+  <body>
+    <!--Form For Inputing Data -->
+    <div
+      class="klub_tab_tl1_x cms_tile_hldr"
+      align="center"
+      style="background-color: #fffaf1"
+    >
+      <form
+        onsubmit="postData(event)"
+        action=""
+        method="post"
+        id="defaultform"
+        enctype="multipart/form-data"
+      >
+        <table>
+          <tr>
+            <td>
+              <label for="categoryid">Category: </label>
+            </td>
+            <td>
+              <select
+                required
+                type="select"
+                name="categoryid"
+                id="categoryid"
+                class="klub_input klub_h3 cms_inp_det1"
+                onchange="getSubCategory()"
+              >
+                <option value="none">None</option>
+              </select>
+            </td>
+            <td>
+              <label for="categoryid">Sub Category: </label>
+            </td>
+            <td>
+              <select
+                type="select"
+                name="subcategoryid"
+                id="subcategoryid"
+                class="klub_input klub_h3 cms_inp_det1"
+                onchange="getSecondSubCategory()"
+              >
+                <option value="none">None</option>
+              </select>
+            </td>
+            <td>
+              <label for="categoryid">Second Sub Category: </label>
+            </td>
+            <td>
+              <select
+                type="select"
+                name="secondsubcategoryid"
+                id="secondsubcategoryid"
+                class="klub_input klub_h3 cms_inp_det1"
+              >
+                <option value="none">None</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="name">Name: </label>
+            </td>
+            <td>
+              <input
+                required
+                type="text"
+                name="name"
+                id="name"
+                class="klub_input klub_h3 cms_inp_det1"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="description">Description: </label>
+            </td>
+            <td>
+              <textarea
+                name="description"
+                id="description"
+                class="klub_input klub_h3 cms_inp_det1"
+              ></textarea>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="priority">Item Priority: </label>
+            </td>
+            <td>
+              <input
+                type="text"
+                name="priority"
+                id="priority"
+                class="klub_input klub_h3 cms_inp_det1"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="specification">Specification: </label>
+            </td>
+            <td>
+              <textarea
+                name="specification"
+                id="specification"
+                class="klub_input klub_h3 cms_inp_det1"
+              ></textarea>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="refferedby">Reffered By: </label>
+            </td>
+            <td>
+              <input
+                type="text"
+                name="refferedby"
+                id="refferedby"
+                class="klub_input klub_h3 cms_inp_det1"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input
+                class="btn btn-success"
+                role="button"
+                type="submit"
+                name="submit"
+                value="Submit"
+              />
+            </td>
+            <td><h3 id="resmsg"></h3></td>
+          </tr>
+        </table>
+      </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <script type="text/javascript">
+      function postData(event) {
+        event.preventDefault();
+        let temp;
+        if (document.getElementById("secondsubcategoryid").vaule === "none") {
+          if (document.getElementById("subcategoryid").vaule === "none") {
+            temp =
+              document.getElementById("categoryid").selectedOptions[0]
+                .attributes[1].nodeValue;
+          } else {
+            temp =
+              document.getElementById("subcategoryid").selectedOptions[0]
+                .attributes[1].nodeValue;
+          }
+        } else {
+          temp = document.getElementById("secondsubcategoryid")
+            .selectedOptions[0].attributes[1].nodeValue;
+        }
+
+        const formData = new FormData(document.getElementById("defaultform"));
+        formData.append("categoryid", temp);
+        var httpxml = new XMLHttpRequest();
+        $.ajax({
+          method: "POST",
+          url: "item.php",
+          processData: false,
+          contentType: false,
+          data: formData,
+
+          success: () => {
+            $("#resmsg").addClass("klub_h3");
+
+            $("#resmsg")[0].innerText = "Entry Added Successfully";
+            $("#defaultform")[0].reset();
+          },
+          error: () => {
+            $("#resmsg").addClass("klub_tbar_container");
+
+            $("#resmsg").text = "Error";
+          },
+        });
+      }
+
+      function getSubCategory() {
+        let formData = new FormData();
+        let textField = $("#categoryid").val();
+
+        formData.append("categoryname", textField);
+        var httpxml = new XMLHttpRequest();
+        $.ajax({
+          method: "POST",
+          url: "getSubCategory.php",
+          processData: false,
+          contentType: false,
+          data: formData,
+          success: (response) => {
+            document.getElementById("subcategoryid").innerHTML += response;
+          },
+          error: () => {
+            $("#supplierAddress").val("Error");
+          },
+        });
+      }
+      function getSecondSubCategory() {
+        let formData = new FormData();
+        let textField = $("#subcategoryid").val();
+        formData.append("subcategoryname", textField);
+        var httpxml = new XMLHttpRequest();
+        $.ajax({
+          method: "POST",
+          url: "getSecondSubCategory.php",
+          processData: false,
+          contentType: false,
+          data: formData,
+          success: (response) => {
+            document.getElementById("secondsubcategoryid").innerHTML +=
+              response;
+          },
+          error: () => {
+            $("#supplierAddress").val("Error");
+          },
+        });
+      }
+    </script>
+    <script type="text/javascript">
+      window.addEventListener("load", () => {
+        var httpxml = new XMLHttpRequest();
+
+        function stateck() {
+          if (httpxml.readyState == 4) {
+            document.getElementById("categoryid").innerHTML +=
+              httpxml.responseText;
+          }
+        }
+        var url = "getCategory.php";
+        httpxml.onreadystatechange = stateck;
+        httpxml.open("GET", url, true);
+        httpxml.send(null);
+      });
+    </script>
+  </body>
+</html>
